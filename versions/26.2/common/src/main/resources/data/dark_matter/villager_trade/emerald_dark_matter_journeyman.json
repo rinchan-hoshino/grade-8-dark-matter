@@ -1,0 +1,12 @@
+{
+  "wants": {
+    "id": "minecraft:emerald",
+    "count": 1.0
+  },
+  "gives": {
+    "id": "dark_matter:dark_matter"
+  },
+  "max_uses": 24.0,
+  "xp": 10.0,
+  "reputation_discount": 0.05
+}

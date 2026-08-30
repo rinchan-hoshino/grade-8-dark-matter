@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "dark_matter",
+  "version": "${version}",
+  "name": "Dark Matter",
+  "description": "Repairs any damageable item in an anvil with compact Dark Matter.",
+  "authors": [
+    "RinChan"
+  ],
+  "license": "MIT",
+  "icon": "assets/dark_matter/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dev.rinchan.darkmatter.fabric.DarkMatterFabric"
+    ]
+  },
+  "mixins": [
+    "dark_matter.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.19.4",
+    "minecraft": "=26.2",
+    "java": ">=25",
+    "fabric-api": "*"
+  }
+}
