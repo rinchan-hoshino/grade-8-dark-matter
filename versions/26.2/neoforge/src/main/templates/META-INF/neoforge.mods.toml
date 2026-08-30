@@ -4,9 +4,9 @@ license="MIT"
 [[mods]]
 modId="dark_matter"
 version="${mod_version}"
-displayName="Dark Matter"
+displayName="Grade 8 Dark Matter"
 authors="RinChan"
-description='''Repairs any damageable item in an anvil with compact Dark Matter.'''
+description='''Repairs any damageable item in an anvil with compact Grade 8 Dark Matter.'''
 logoFile="assets/dark_matter/icon.png"
 [[mixins]]
 config="dark_matter.mixins.json"

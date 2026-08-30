@@ -2,7 +2,7 @@
 set -euo pipefail
 root=$(cd "$(dirname "$0")/.." && pwd)
 for version in 1.21.1 26.1.2 26.2; do
-  echo "== Dark Matter ${version} =="
+  echo "== Grade 8 Dark Matter ${version} =="
   cd "$root/versions/$version"
   if [[ "$version" == 1.21.1 ]]; then
     /home/rin/.local/bin/rin-gradle ./gradlew clean test build

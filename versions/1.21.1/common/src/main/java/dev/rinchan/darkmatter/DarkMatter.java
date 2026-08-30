@@ -14,7 +14,7 @@ public final class DarkMatter {
     private DarkMatter() {}
 
     public static void initialize(Supplier<? extends Item> registeredItem) {
-        if (item != null) throw new IllegalStateException("Dark Matter already initialized");
+        if (item != null) throw new IllegalStateException("Grade 8 Dark Matter already initialized");
         item = Objects.requireNonNull(registeredItem);
     }
 

@@ -1,10 +1,10 @@
-<p align="center"><img src="docs/icon.png" width="160" alt="Dark Matter icon"></p>
+<p align="center"><img src="docs/icon.png" width="160" alt="Grade 8 Dark Matter icon"></p>
 
-# Dark Matter
+# Grade 8 Dark Matter
 
-A standalone Minecraft mod by RinChan. Dark Matter repairs any damageable left-hand anvil stack by **64 durability per item**, consumes only the number of Dark Matter items needed, keeps the repaired stack's components, and costs no experience.
+A standalone Minecraft mod by RinChan. Grade 8 Dark Matter repairs any damageable left-hand anvil stack by **64 durability per item**, consumes only the number of Grade 8 Dark Matter items needed, keeps the repaired stack's components, and costs no experience.
 
-Armorers and toolsmiths sell one Dark Matter for one emerald at novice and journeyman levels. Optional recipes are loaded only when their owning mod is present:
+Armorers and toolsmiths sell one Grade 8 Dark Matter for one emerald at novice and journeyman levels. Optional recipes are loaded only when their owning mod is present:
 
 - Create: heated mixing of crushed obsidian, coal, and an amethyst shard.
 - Botania: alchemy-catalyst mana infusion of obsidian for 6,000 mana.

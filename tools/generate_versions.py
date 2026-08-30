@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the three API-specific Dark Matter source trees."""
+"""Generate the three API-specific Grade 8 Dark Matter source trees."""
 from __future__ import annotations
 
 import json
@@ -10,6 +10,11 @@ import zlib
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+DISPLAY_NAME = "Grade 8 Dark Matter"
+ITEM_NAME_ZH_CN = "8型暗物质"
+MOD_VERSION = "1.0.1"
+DESCRIPTION = "Repairs any damageable item in an anvil with compact Grade 8 Dark Matter."
+
 VERSIONS = {
     "1.21.1": {
         "java": 21,
@@ -20,8 +25,7 @@ VERSIONS = {
         "neo": "21.1.228",
         "mc_range": "[1.21.1,1.22)",
         "neo_range": "[21.1.0,)",
-        "pack": {"pack_format": 34, "description": "Dark Matter resources"},
-        "wrapper": Path("/home/rin/rinchan/work/kill-confirmed"),
+        "pack": {"pack_format": 34, "description": f"{DISPLAY_NAME} resources"},
     },
     "26.1.2": {
         "java": 25,
@@ -32,8 +36,7 @@ VERSIONS = {
         "neo": "26.1.2.99",
         "mc_range": "[26.1.2,26.1.3)",
         "neo_range": "[26.1.2.99,26.1.3)",
-        "pack": {"description": "Dark Matter resources", "min_format": [84, 0], "max_format": [101, 1]},
-        "wrapper": Path("/home/rin/rinchan/work/mod-publishing/standard-mod-classpaths-2026-08-29/source-kill-confirmed-ef591d1f7ba3"),
+        "pack": {"description": f"{DISPLAY_NAME} resources", "min_format": [84, 0], "max_format": [101, 1]},
     },
     "26.2": {
         "java": 25,
@@ -44,8 +47,7 @@ VERSIONS = {
         "neo": "26.2.0.69",
         "mc_range": "[26.2,26.3)",
         "neo_range": "[26.2.0,)",
-        "pack": {"description": "Dark Matter resources", "min_format": [88, 0], "max_format": [107, 1]},
-        "wrapper": Path("/home/rin/rinchan/work/mod-publishing/standard-mod-classpaths-2026-08-29/source-kill-confirmed-7ca0ea8719ee"),
+        "pack": {"description": f"{DISPLAY_NAME} resources", "min_format": [88, 0], "max_format": [107, 1]},
     },
 }
 
@@ -234,14 +236,19 @@ final class SourceContractTest {
         String fabric = Files.readString(ROOT.resolve("fabric/src/main/resources/fabric.mod.json"));
         String neo = Files.readString(ROOT.resolve("neoforge/src/main/templates/META-INF/neoforge.mods.toml"));
         String properties = Files.readString(ROOT.resolve("gradle.properties"));
+        String english = Files.readString(ROOT.resolve("common/src/main/resources/assets/dark_matter/lang/en_us.json"));
+        String chinese = Files.readString(ROOT.resolve("common/src/main/resources/assets/dark_matter/lang/zh_cn.json"));
         assertTrue(fabric.contains("\\\"id\\\": \\\"dark_matter\\\""));
         assertTrue(fabric.contains("\\\"version\\\": \\\"${version}\\\""));
-        assertTrue(fabric.contains("\\\"name\\\": \\\"Dark Matter\\\""));
+        assertTrue(fabric.contains("\\\"name\\\": \\\"Grade 8 Dark Matter\\\""));
         assertTrue(fabric.contains("\\\"license\\\": \\\"MIT\\\""));
         assertTrue(fabric.contains("\\\"minecraft\\\": \\\"=${minecraft_version}\\\""));
         assertTrue(neo.contains("modId=\\\"dark_matter\\\""));
         assertTrue(neo.contains("version=\\\"${mod_version}\\\""));
-        assertTrue(properties.contains("mod_version=1.0.0"));
+        assertTrue(neo.contains("displayName=\\\"Grade 8 Dark Matter\\\""));
+        assertTrue(english.contains("\\\"item.dark_matter.dark_matter\\\": \\\"Grade 8 Dark Matter\\\""));
+        assertTrue(chinese.contains("\\\"item.dark_matter.dark_matter\\\": \\\"8型暗物质\\\""));
+        assertTrue(properties.contains("mod_version=1.0.1"));
         assertTrue(properties.contains("minecraft_version=${minecraft_version}"));
         assertFalse(fabric.contains("\\\"create\\\":"));
         assertFalse(fabric.contains("\\\"botania\\\":"));
@@ -332,14 +339,12 @@ def recipe(condition: str, kind: str) -> dict:
 
 def generate(version: str, cfg: dict) -> None:
     root = ROOT / "versions" / version
+    wrapper_paths = ("gradlew", "gradlew.bat", "gradle/wrapper/gradle-wrapper.jar", "gradle/wrapper/gradle-wrapper.properties")
+    wrapper_files = {name: (root / name).read_bytes() for name in wrapper_paths}
     if root.exists():
         shutil.rmtree(root)
-    (root / "gradle/wrapper").mkdir(parents=True)
-    wrapper = cfg["wrapper"]
-    for name in ("gradlew", "gradlew.bat"):
-        shutil.copy2(wrapper / name, root / name)
-    for name in ("gradle-wrapper.jar", "gradle-wrapper.properties"):
-        shutil.copy2(wrapper / "gradle/wrapper" / name, root / "gradle/wrapper" / name)
+    for name, content in wrapper_files.items():
+        put(root / name, content)
     (root / "gradlew").chmod(0o755)
 
     put(root / "settings.gradle", f"""
@@ -397,12 +402,12 @@ def generate(version: str, cfg: dict) -> None:
         loader_version_range={'[4,)' if version == '1.21.1' else '[3,)' if version == '26.1.2' else '[11,)'}
 
         mod_id=dark_matter
-        mod_name=Dark Matter
+        mod_name={DISPLAY_NAME}
         mod_license=MIT
-        mod_version=1.0.0
+        mod_version={MOD_VERSION}
         mod_group_id=dev.rinchan
         mod_authors=RinChan
-        mod_description=Repairs any damageable item in an anvil with compact Dark Matter.
+        mod_description={DESCRIPTION}
     """)
 
     put(root / "policy/build.gradle", """
@@ -444,7 +449,7 @@ def generate(version: str, cfg: dict) -> None:
             private DarkMatter() {{}}
 
             public static void initialize(Supplier<? extends Item> registeredItem) {{
-                if (item != null) throw new IllegalStateException("Dark Matter already initialized");
+                if (item != null) throw new IllegalStateException("Grade 8 Dark Matter already initialized");
                 item = Objects.requireNonNull(registeredItem);
             }}
 
@@ -461,8 +466,8 @@ def generate(version: str, cfg: dict) -> None:
         "mixins": ["AnvilMenuMixin"], "injectors": {"defaultRequire": 1},
     })
     json_put(root / "common/src/main/resources/pack.mcmeta", {"pack": cfg["pack"]})
-    json_put(root / "common/src/main/resources/assets/dark_matter/lang/en_us.json", {"item.dark_matter.dark_matter": "Dark Matter"})
-    json_put(root / "common/src/main/resources/assets/dark_matter/lang/zh_cn.json", {"item.dark_matter.dark_matter": "暗物质"})
+    json_put(root / "common/src/main/resources/assets/dark_matter/lang/en_us.json", {"item.dark_matter.dark_matter": DISPLAY_NAME})
+    json_put(root / "common/src/main/resources/assets/dark_matter/lang/zh_cn.json", {"item.dark_matter.dark_matter": ITEM_NAME_ZH_CN})
     json_put(root / "common/src/main/resources/assets/dark_matter/models/item/dark_matter.json", {"parent": "minecraft:item/generated", "textures": {"layer0": "dark_matter:item/dark_matter"}})
     if version != "1.21.1":
         json_put(root / "common/src/main/resources/assets/dark_matter/items/dark_matter.json", {"model": {"type": "minecraft:model", "model": "dark_matter:item/dark_matter"}})
@@ -531,8 +536,8 @@ def generate(version: str, cfg: dict) -> None:
     fabric_entry += "}\n"
     put(root / "fabric/src/main/java/dev/rinchan/darkmatter/fabric/DarkMatterFabric.java", fabric_entry)
     json_put(root / "fabric/src/main/resources/fabric.mod.json", {
-        "schemaVersion": 1, "id": "dark_matter", "version": "${version}", "name": "Dark Matter",
-        "description": "Repairs any damageable item in an anvil with compact Dark Matter.",
+        "schemaVersion": 1, "id": "dark_matter", "version": "${version}", "name": DISPLAY_NAME,
+        "description": DESCRIPTION,
         "authors": ["RinChan"], "license": "MIT", "icon": "assets/dark_matter/icon.png", "environment": "*",
         "entrypoints": {"main": ["dev.rinchan.darkmatter.fabric.DarkMatterFabric"]},
         "mixins": ["dark_matter.mixins.json"],
@@ -610,9 +615,9 @@ def generate(version: str, cfg: dict) -> None:
         [[mods]]
         modId="dark_matter"
         version="${{mod_version}}"
-        displayName="Dark Matter"
+        displayName="{DISPLAY_NAME}"
         authors="RinChan"
-        description='''Repairs any damageable item in an anvil with compact Dark Matter.'''
+        description='''{DESCRIPTION}'''
         logoFile="assets/dark_matter/icon.png"
         [[mixins]]
         config="dark_matter.mixins.json"
