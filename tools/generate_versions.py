@@ -416,6 +416,7 @@ def generate(version: str, cfg: dict) -> None:
             srcDir rootProject.file('common/src/main/java')
             include 'dev/rinchan/darkmatter/DarkMatterRepairPolicy.java'
         }
+        sourceSets.test.java.srcDir rootProject.file('../../tools/test-fixtures/java')
         dependencies {
             testImplementation platform('org.junit:junit-bom:5.11.4')
             testImplementation 'org.junit.jupiter:junit-jupiter'

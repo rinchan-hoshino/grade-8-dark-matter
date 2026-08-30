@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "repository": "dark-matter",
+  "status": "not_executed",
+  "scenarios": [
+    {
+      "id": "anvil-transaction-and-stale-state",
+      "owner": "Per-generation, per-loader GameTest",
+      "status": "not_executed",
+      "prerequisites": [
+        "Each supported source generation on Fabric and NeoForge",
+        "A zero-experience player and a real AnvilMenu",
+        "A damaged item carrying name, enchantment, and custom components"
+      ],
+      "steps": [
+        "Repair damage values 1, 64, 65, and 500 with sufficient and insufficient dark matter",
+        "Take the output as a zero-experience player and record both input slots and output components",
+        "In the same menu, replace a valid input with undamaged, non-damageable, wrong-material, and empty inputs"
+      ],
+      "assertions": [
+        "Exactly min(ceil(damage / 64), available) materials are consumed",
+        "Output count is one and all left-stack components except damage are preserved",
+        "Experience cost is zero and pickup succeeds at zero experience",
+        "Every invalid input clears custom pickup permission, material cost, and output without stale state"
+      ],
+      "covers": ["DM-I3", "DM-I4", "DM-I5", "DM-I6", "DM-I7"]
+    },
+    {
+      "id": "trade-and-optional-recipe-registration",
+      "owner": "Loader registry GameTest",
+      "status": "not_executed",
+      "prerequisites": [
+        "Controlled environments with neither, either, and both Create and Botania installed",
+        "Fresh villager trade registries for each supported generation"
+      ],
+      "steps": [
+        "Enumerate armorer, toolsmith, and control-profession trade pools at levels 1 and 3",
+        "Reload datapacks in all four optional-dependency combinations",
+        "Decode present optional recipes through the owning mod's real RecipeSerializer"
+      ],
+      "assertions": [
+        "Only armorer and toolsmith receive one emerald to one dark matter trades at levels 1 and 3",
+        "Recipes are absent when their owner mod is absent",
+        "Recipes present with their owner mod decode and enter the live recipe registry without codec errors"
+      ],
+      "covers": ["DM-I8", "DM-I9"]
+    }
+  ]
+}
