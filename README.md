@@ -1,13 +1,33 @@
-<p align="center"><img src="docs/icon.png" width="160" alt="Grade 8 Dark Matter icon"></p>
-
 # Grade 8 Dark Matter
 
-A standalone Minecraft mod by RinChan. Grade 8 Dark Matter repairs any damageable left-hand anvil stack by **64 durability per item**, consumes only the number of Grade 8 Dark Matter items needed, keeps the repaired stack's components, and costs no experience.
+<!-- PROJECT_PAGE_START -->
+Repair a whole stack of damaged equipment in one anvil operation, with exact material use and no experience cost.
 
-Armorers and toolsmiths sell one Grade 8 Dark Matter for one emerald at novice and journeyman levels. Optional recipes are loaded only when their owning mod is present:
+![Grade 8 Dark Matter workflow](docs/overview.png)
 
-- Create: heated mixing of crushed obsidian, coal, and an amethyst shard.
-- Botania: alchemy-catalyst mana infusion of obsidian for 6,000 mana.
+## What it changes
+
+- Repairs **64 durability per material item** across the stack.
+- Consumes only the amount needed; any unused material stays in its slot.
+- Keeps enchantments, names, attributes, components and other item data intact.
+- Refuses recipes that would make no progress or consume an unsafe input.
+
+## Compatibility
+
+Available for the supported Fabric, Forge and NeoForge versions listed on the platform Versions page. Fabric builds require Fabric API.
+
+## Use
+
+Put a damaged stack in the left anvil slot and Grade 8 Dark Matter in the material slot. The output shows the repaired stack and the anvil charges no XP.
+
+## Download and support
+
+Use the platform Versions page for exact game-version and loader files. Report reproducible problems through the project GitHub Issues page.
+<!-- PROJECT_PAGE_END -->
+
+---
+
+## Additional technical details
 
 ## Supported matrix
 
