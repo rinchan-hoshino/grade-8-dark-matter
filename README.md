@@ -3,7 +3,6 @@
 <!-- PROJECT_PAGE_START -->
 Repair a whole stack of damaged equipment in one anvil operation, with exact material use and no experience cost.
 
-![Grade 8 Dark Matter workflow](docs/overview.png)
 
 ## What it changes
 
